@@ -3,18 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kamal ❤️ Khushi</title>
+  <title>Khushi Chatbot</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat-header">💬 Kamal ❤️ Khushi</div>
+  <div class="chat-header">💬 Khushi Chatbot </div>
   <div id="status" class="status">Checking status...</div>
   <div id="chatbox" class="chatbox"></div>
 
   <div class="input-area">
-    <input type="text" id="messageInput" placeholder="Type your message..." />
-    <button onclick="sendMessage()">Send</button>
-  </div>
+  <input type="text" id="messageInput" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
+  <button onclick="deleteChat()" class="delete-all-btn">🗑</button>
+  <input type="file" id="bgPicker" accept="image/*">
+</div>
+
+
 
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
