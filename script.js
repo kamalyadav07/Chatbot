@@ -2,7 +2,7 @@ const chatbox = document.getElementById("chatbox");
 const input = document.getElementById("messageInput");
 const status = document.getElementById("status");
 
-let username = prompt("Tumhara naam likho (Kamal ya Khushi):");
+let username = prompt("Apna naam likho (Kamal ya Khushi):");
 username = username.trim();
 
 if (username !== "Kamal" && username !== "Khushi") {
@@ -11,6 +11,13 @@ if (username !== "Kamal" && username !== "Khushi") {
 }
 
 const friendName = username === "Kamal" ? "Khushi" : "Kamal";
+db.ref("presence/" + friendName).on("value", (snapshot) => {
+  if (snapshot.val() === "online") {
+    status.textContent = `${friendName} is online 💚`;
+  } else {
+    status.textContent = `Waiting for ${friendName}...`;
+  }
+});
 
 function sendMessage() {
   const msg = input.value.trim();
@@ -45,6 +52,15 @@ db.ref("messages").on("child_removed", (snapshot) => {
   const msgElements = document.querySelectorAll(`[data-key="${key}"]`);
   msgElements.forEach(el => el.remove());
 });
+window.addEventListener("focus", () => {
+  db.ref("presence/" + username).set("online");
+});
+
+window.addEventListener("blur", () => {
+  db.ref("presence/" + username).set("offline");
+});
+
+
 
 
 function deleteMessage(key) {
@@ -60,6 +76,4 @@ function deleteChat() {
     });
   }
 }
-
-
 
