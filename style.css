@@ -66,3 +66,76 @@ button {
   color: white;
   cursor: pointer;
 }
+.delete-all-container {
+  text-align: center;
+  margin: 10px;
+}
+
+.delete-all-btn {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.message .delete-icon {
+  float: right;
+  color: red;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  background-image: url('newbg3.jpg'); /* 👈 apni image ka naam */
+  background-size: cover;                 /* Image screen ke according scale ho */
+  background-position: center center;     /* Center align kare */
+  background-repeat: no-repeat;           /* Repeat na ho */
+  background-attachment: fixed;           /* Scroll ke sath move na ho */
+  display: flex;
+  flex-direction: column;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); /* White-transparent overlay */
+  z-index: -1;
+}
+
+.input-area {
+  display: flex;
+  padding: 10px;
+  background: #fff;
+  gap: 5px;
+}
+
+#messageInput {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+button:nth-child(2) {
+  background: #ff69b4;
+  color: white;
+}
+
+.delete-all-btn {
+  background: red;
+  color: white;
+}
+
