@@ -27,26 +27,39 @@ function sendMessage() {
 
 db.ref("messages").on("child_added", (snapshot) => {
   const msg = snapshot.val();
+  const key = snapshot.key;
+
   const msgEl = document.createElement("div");
   msgEl.className = "message " + (msg.sender === username ? "sent" : "received");
-  msgEl.innerText = msg.sender + ": " + msg.text;
+  msgEl.setAttribute("data-key", key); // 👈 This is important for deletion
+  msgEl.innerHTML = `
+    ${msg.sender}: ${msg.text}
+    ${msg.sender === username ? `<span class="delete-icon" onclick="deleteMessage('${key}')">🗑</span>` : ""}
+  `;
   chatbox.appendChild(msgEl);
   chatbox.scrollTop = chatbox.scrollHeight;
 });
 
-// Track user online/offline
-window.addEventListener("focus", () => {
-  db.ref("presence/" + username).set("online");
-});
-window.addEventListener("blur", () => {
-  db.ref("presence/" + username).set("offline");
+db.ref("messages").on("child_removed", (snapshot) => {
+  const key = snapshot.key;
+  const msgElements = document.querySelectorAll(`[data-key="${key}"]`);
+  msgElements.forEach(el => el.remove());
 });
 
-// Show other person's status
-db.ref("presence/" + friendName).on("value", (snapshot) => {
-  if (snapshot.val() === "online") {
-    status.textContent = `${friendName} is online 💚`;
-  } else {
-    status.textContent = `Waiting for ${friendName}...`;
+
+function deleteMessage(key) {
+  if (confirm("You Want to Delete this message?")) {
+    db.ref("messages/" + key).remove();
   }
-});
+}
+function deleteChat() {
+  if (confirm("You want to Delete whole chat.")) {
+    db.ref("messages").remove().then(() => {
+      chatbox.innerHTML = "";
+      alert("Chat Deleted ✅");
+    });
+  }
+}
+
+
+
